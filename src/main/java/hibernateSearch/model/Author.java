@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 
 @Entity(name = "author")
@@ -19,6 +20,7 @@ public class Author {
 
 	@Column(name = "name")
 	@Field
+	@Analyzer(definition = "customanalyzer")
 	private String name;
 
 	public int getId() {

@@ -10,7 +10,7 @@
 <script>
 	function search(query) {
 		$("#bookTable").find("tr:gt(0)").remove();
-		if (query.value != '') {
+		if (query.value.trim() != '') {
 
 			$
 					.post(
@@ -20,14 +20,14 @@
 							},
 							function(entry) {
 								if (entry.length > 0) {
+									$('#bookTable').show();
+									$('#noResults').hide();
 									entry
 											.forEach(function(data) {
 												$('#bookTable')
 														.append(
 																'<tr><td>'
 																		+ data.title
-																		+ '</td><td>'
-																		+ data.date
 																		+ '</td><td>'
 																		+ data.language
 																		+ '</td><td>'
@@ -36,23 +36,40 @@
 																		+ data.id
 																		+ ')"></td></tr>');
 											})
+								} else {
+									$('#bookTable').hide();
+									$('#noResults').show();
+									$('#noResults').text("No results....");
 								}
 							})
+		} else {
+			$('#noResults').hide();
 		}
+	}
+
+	function deleteBook(id) {
+		$.post("deleteBook", {
+			id : id
+		}, function() {
+			location.reload();
+		})
 	}
 </script>
 </head>
 <body>
-	<input type="text" onkeyup="search(this)"></input>
-
-	<table border="1px" id="bookTable">
+	<input placeholder="Search......."
+		style="width: 50%; height: 45px; margin-left: 22%; margin-bottom: 10%; margin-top: 10%; font-size: 30px; font-style: oblique; font-family: serif; margin-right: 22%;"
+		type="text" onkeyup="search(this)"></input>
+	<table id="bookTable"
+		style="width: 100%; text-align: center; font-style: oblique; font-size: 30px; font-family: serif; display: none;">
 		<tr>
 			<th>Book Title</th>
-			<th>Published Date</th>
 			<th>Language</th>
 			<th>Author</th>
-			<th>Add/Delete</th>
+			<th>Delete</th>
 		</tr>
 	</table>
+	<div id="noResults"
+		style="width: 100%; text-align: center; font-style: oblique; font-size: 30px; font-family: serif;"></div>
 </body>
 </html>

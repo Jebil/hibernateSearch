@@ -16,7 +16,7 @@
 		var language=$('#language').val();
 		var author=$('#author').val();
 		$.post("addBook",{title:title,language:language,author:author},function(data){
-			$('#bookTable').append('<tr><td>'+data.title+'</td><td>'+data.date+'</td><td>'+data.language+'</td><td>'+data.author.name+'</td><td><input type="button" name="delete" value="Delete"onclick="deleteBook('+data.id+')"></td></tr>');
+			$('#bookTable').append('<tr><td>'+data.title+'</td><td>'+data.language+'</td><td>'+data.author.name+'</td><td><input type="button" name="delete" value="Delete"onclick="deleteBook('+data.id+')"></td></tr>');
 		})
 	}
 	
@@ -28,17 +28,15 @@
 </script>
 </head>
 <body>
-	<table border="1px" id="bookTable">
+	<table id="bookTable" style="width: 100%; text-align: center; font-style: oblique; font-size: 30px; font-family: serif;">
 		<tr>
 			<th>Book Title</th>
-			<th>Published Date</th>
 			<th>Language</th>
 			<th>Author</th>
 			<th>Add/Delete</th>
 		</tr>
 		<tr>
 			<td><input type="text" id="title"></td>
-			<td><input type="text" id="date"></td>
 			<td><input type="text" id="language"></td>
 			<td><input type="text" id="author"></td>
 			<td><input type="button" name="Add" value="Add"
@@ -47,7 +45,6 @@
 		<c:forEach var="book" items="${bookList }">
 			<tr>
 				<td>${book.title}</td>
-				<td>${book.publishedDate}</td>
 				<td>${book.language}</td>
 				<td>${book.author.name}</td>
 				<td><input type="button" name="delete" value="Delete"
